@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { getOtpForReg, reg } from "../store/authSlice";
+import EmailOtpMsg from "./ui/EmailOtpMsg";
+import Loading from "./ui/Loading";
 
 export default function Reg() {
   const initialState = {
@@ -6,9 +11,13 @@ export default function Reg() {
     email: "",
     password: "",
     confirmPassword: "",
+    otp : ""
   };
 
   const [formData, setFormData] = useState(initialState);
+  const dispatch = useDispatch()
+  const {otpLoading ,isLoading } = useSelector(state => state.authSlice)
+  const [askOtp,setAskOtp] = useState(false)
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -19,6 +28,68 @@ export default function Reg() {
     });
   };
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // const btnDesable = !formData.email || !formData.password
+ 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if(!emailRegex.test(formData.email)){
+      return toast.error("Invailed email");
+    }
+    if(formData.password !== formData.confirmPassword ){
+        return toast.error("Passwords do not match");
+    }
+
+    if(!formData.otp ){
+      return toast.error("Plz provide otp");
+  }
+
+    dispatch(reg(formData))
+    .then((data) => {
+      console.log("data",data)
+      if(data?.payload?.success){
+        toast.success(data?.payload?.message);
+        setAskOtp(true)
+      }else{
+        toast.error(data?.payload?.message);
+      }
+    }) 
+    // Add your logic here to handle form submission
+    console.log(formData);
+    };
+
+//     const apiUrl = import.meta.env.VITE_API_URL;
+// console.log('API URL:', apiUrl);
+
+
+    const getOtp = async () => {
+      if(!emailRegex.test(formData.email)){
+        return toast.error("Invailed email");
+      }
+
+      
+    if(formData.password !== formData.confirmPassword){
+      return toast.error("Passwords do not match");
+  }
+
+      dispatch(getOtpForReg(formData?.email))
+      .then((data) => {
+        console.log("data",data)
+        if(data?.payload?.success){
+          toast.success(data?.payload?.message);
+          setAskOtp(true)
+        }else{
+          toast.error(data?.payload?.message);
+        }
+      }) 
+
+      
+    }
+
+    // console.log("import.meta.env.SERVER"  ,import.meta.env.VITE_API_URL_SERVE)
+
   // Check if the button should be disabled (at least one field is empty)
   const btnDisabled =
     !formData.name.trim() ||
@@ -28,6 +99,7 @@ export default function Reg() {
 
   return (
     <div className="w-full min-h-[100vh] flex justify-center items-center">
+      {askOtp ? <div> <EmailOtpMsg email={formData?.email} formData={formData} setFormData={setFormData} isLoading={isLoading} handleSubmit={handleSubmit} /> </div>  : 
       <div className="bg-white w-[480px] px-[20px] py-5 rounded-xl shadow-lg">
         <h1 className="text-2xl font-bold">Welcome to MIX GPT</h1>
         <p className="opacity-70">Create a free account by filling in the data below</p>
@@ -78,16 +150,16 @@ export default function Reg() {
           />
 
           {/* Submit Button */}
-          <button
-            disabled={btnDisabled}
+          <button onClick={getOtp}
+            disabled={btnDisabled || otpLoading  }
             className={`p-2 font-semibold text-white rounded-xl mt-7 ${
               btnDisabled ? "bg-gray-300" : "bg-green-500 hover:bg-green-600"
             }`}
           >
-            Create Account
+            {  otpLoading  ?<Loading/> : "Create Account"}
           </button>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }

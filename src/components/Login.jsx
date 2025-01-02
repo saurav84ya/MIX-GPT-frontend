@@ -1,27 +1,81 @@
-import React from 'react'
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "./ui/Loading";
+import toast from "react-hot-toast";
+import { login } from "../store/authSlice";
 
 export default function Login() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const { isLoading } = useSelector((state) => state.authSlice);
+  const dispatch = useDispatch()
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const onSubmit = async( e) => {
+    e.preventDefault();
+
+    if(!emailRegex.test(formData.email) || !formData.password || !formData.email ) { 
+      return toast.error("Plz Fill the data properly");
+    }
+    // console.log("formData" ,formData)
+
+    dispatch(login(formData))
+    .then((data) => {
+      console.log("data",data)
+      if(data?.payload?.success){
+        toast.success(data?.payload?.message);
+        // setAskOtp(true)
+      }else{
+        toast.error(data?.payload?.message);
+      }
+    }) 
+  }
+
   return (
-    <div className=" bg-white w-[480px] px-[20px] py-5 m-3 rounded-xl shadow-lg ">
+    <div className="w-full h-[100vh] flex justify-center items-center ">
+      <div className=" bg-white w-[480px] px-[20px] py-5 m-3 rounded-xl shadow-lg ">
+        <h1 className="text-2xl font-bold">Welcome to MIX GPT</h1>
+        <p className="opacity-70">
+          {" "}
+          Enter your credentials to access the account{" "}
+        </p>
 
+        <div className=" flex flex-col mt-2 ">
+          <label className="font-bold text-[14px] mt-3  ">Email</label>
+          <input
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+            className="p-2 mt-1 rounded-md border border-[##EEEEF4] "
+            type="email"
+            placeholder="your email"
+          />
 
-    <h1 className="text-2xl font-bold" >Welcome to MIX GPT</h1>
-    <p className="opacity-70" > Enter your credentials to access the account </p>
+          <label className="font-bold text-[14px] mt-3 ">Password</label>
+          <input
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            className="p-2 mt-1 rounded-md border border-[##EEEEF4] "
+            placeholder="password"
+            type="password"
+          />
 
-    <form className=" flex flex-col mt-2 " >
-
-      <label className="font-bold text-[14px] mt-3  " >Email</label>
-      <input  className="p-2 mt-1 rounded-md border border-[##EEEEF4] " type="email" placeholder="your email" />
-
-      <label className="font-bold text-[14px] mt-3 " >Password</label>
-      <input className="p-2 mt-1 rounded-md border border-[##EEEEF4] " placeholder='password'  type="password"  />
-
-      <button className="bg-gray-300 p-2 font-semibold rounded-xl mt-7 " >Login</button>
-
-    </form>
-
-    <p className="mt-4 text-center opacity-60 font-semibold text-[12px] " >Don't have account? <span className="text-[#5F00D9]  cursor-pointer ">Sign up</span> </p>
-    
-  </div>
-  )
+          <button
+            disabled={isLoading}
+            onClick={onSubmit}
+            className={`p-2 font-semibold text-white rounded-xl mt-7 bg-green-500 hover:bg-green-600
+            }`}
+          >
+            {isLoading ? <Loading /> : "Login"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }

@@ -9,12 +9,7 @@ export default function AuthPage() {
   const [inputName, setInputName] = useState("");
 
   // Check if the name is in localStorage on page load
-  useEffect(() => {
-    const storedName = localStorage.getItem("name");
-    if (storedName) {
-      navigate("/home");
-    }
-  }, [navigate]);
+
 
   const handleGuestContinue = () => {
     if (inputName.trim()) {
