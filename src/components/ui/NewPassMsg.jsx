@@ -1,5 +1,6 @@
 import React from 'react'
 import { FaCheckCircle } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 export default function NewPassMsg() {
   return ( 
@@ -10,9 +11,10 @@ export default function NewPassMsg() {
 
 
 
+      <Link to="/home">
       <button className="bg-[#5F00D9] text-white p-2 font-semibold rounded-xl w-full  mt-3">
-          Sign in
-      </button>
+          Go to Home
+      </button></Link>
   </div>
   )
 }

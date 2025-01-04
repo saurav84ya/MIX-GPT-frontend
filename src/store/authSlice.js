@@ -40,6 +40,17 @@ export const getOtpForReg = createAsyncThunk(
     }
 )
 
+export const getOtpForRec = createAsyncThunk(
+  'auth/getOtpForRec',
+  
+  async (email) => {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}rec/otp/${email}`,
+      )
+      return response.data ;
+  }
+)
+
 export const login = createAsyncThunk(
   'auth/login',
   
@@ -73,6 +84,36 @@ export const checkAuth = createAsyncThunk(
     return response.data;
   }
 );
+
+
+export const verifyOtp = createAsyncThunk(
+  "auth/verifuOtp",
+
+  async(formData) => {
+    const response = await axios.post(
+  `${import.meta.env.VITE_API_URL}rec/otpVerify`,
+      formData
+    )
+    return response.data ;
+  }
+
+
+)
+
+
+
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+
+  async(newPasswordFormData) => {
+    const response = await axios.post(
+  `${import.meta.env.VITE_API_URL}rec/newPass`,
+  newPasswordFormData 
+    )
+    return response.data ;
+  }
+)
+
 
 
 
@@ -134,6 +175,40 @@ const authSlice = createSlice({
           .addCase(getOtpForReg.rejected, (state) => {
             state.otpLoading = false;
           })
+
+          
+
+          .addCase(getOtpForRec.pending, (state) => {
+            state.otpLoading = true;
+          })
+          .addCase(getOtpForRec.fulfilled, (state) => {
+            (state.otpLoading = false)
+          })
+          .addCase(getOtpForRec.rejected, (state) => {
+            state.otpLoading = false;
+          })
+
+
+          .addCase(verifyOtp.pending, (state) => {
+            state.otpLoading = true;
+          })
+          .addCase(verifyOtp.fulfilled, (state) => {
+            (state.otpLoading = false)
+          })
+          .addCase(verifyOtp.rejected, (state) => {
+            state.otpLoading = false;
+          })
+
+          .addCase(resetPassword.pending, (state) => {
+            state.otpLoading = true;
+          })
+          .addCase(resetPassword.fulfilled, (state) => {
+            (state.otpLoading = false)
+          })
+          .addCase(resetPassword.rejected, (state) => {
+            state.otpLoading = false;
+          })
+
     }
 })
 

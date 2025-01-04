@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Loading from "./ui/Loading";
 import toast from "react-hot-toast";
 import { login } from "../store/authSlice";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [rec , setRec] = useState(false)
   const { isLoading } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch()
 
@@ -30,6 +32,7 @@ export default function Login() {
         // setAskOtp(true)
       }else{
         toast.error(data?.payload?.message);
+        setRec(true)
       }
     }) 
   }
@@ -74,6 +77,9 @@ export default function Login() {
           >
             {isLoading ? <Loading /> : "Login"}
           </button>
+          {
+            rec && <p className="text-black opacity-55 text-sm mt-2 text-center ">Do you forgot your Password : <Link to="/authPage/rec" className="opacity-100 font-bold cursor-pointer text-blue-500 " >Need help</Link></p>
+          }
         </div>
       </div>
     </div>

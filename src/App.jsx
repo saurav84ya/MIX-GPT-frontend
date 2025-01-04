@@ -72,6 +72,11 @@ export default function App() {
           path="/authPage"
           element={isAuth ? <Navigate to="/home" /> : <AuthPage />}
         />
+
+        <Route
+          path="/authPage/rec"
+          element={isAuth ? <Navigate to="/home" /> : <Recovery />}
+        />
         
 
         <Route
