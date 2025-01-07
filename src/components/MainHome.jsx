@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiIntersect, BiMenu } from "react-icons/bi";
-import { LuSend } from "react-icons/lu";
+import { FaRegUser } from "react-icons/fa";
+import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
+import { LuNotebookText, LuSend } from "react-icons/lu";
 import { MdDone } from "react-icons/md";
 import { PiNeedle } from "react-icons/pi";
 import { RxOpenInNewWindow } from "react-icons/rx";
 
-export default function MainHome({ isOpen, setIsOpen }) {
+export default function MainHome({ isOpen, setIsOpen ,user}) {
+
+    const [miniMenu , setMiniMenu] = useState(false)
+
+    // console.log("user",user?.name?.slice(0,1))
+
+
   return (
     <div className="h-[100%]  flex items-center ">
 
@@ -13,6 +21,7 @@ export default function MainHome({ isOpen, setIsOpen }) {
 
 
       <div className=" lg:hidden absolute top-2 flex items-center gap-4 left-2 ">
+
         <div className="cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
           <BiMenu size={30} />
         </div>
@@ -20,6 +29,31 @@ export default function MainHome({ isOpen, setIsOpen }) {
           <RxOpenInNewWindow className="cursor-pointer" size={30} />
         </div>
         
+      </div>
+
+      <div className=" absolute top-2 right-4 " >
+        <div className="relative" >
+            <div 
+
+                onClick={() => setMiniMenu(!miniMenu)}
+                
+                className="h-[50px] w-[50px] cursor-pointer  flex justify-center items-center bg-violet-100 rounded-full " >
+
+                <h1 className="font-bold text-2xl " >{user?.name?.slice(0,1) || "X"}</h1>
+
+            </div> 
+
+            { miniMenu &&  <div className="absolute top-[70px] right-0 " >
+                <div  className=" bg-[#FFFDF0] w-[200px] p-4  border-[3px] rounded-xl" >
+                        <h1 className="flex gap-3 cursor-pointer py-2 px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " >  <span><LuNotebookText size={30}  /></span> My Asks </h1>
+                        <h1 className="flex gap-3 cursor-pointer py-2   px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " > <span><IoSettingsOutline size={30}  /></span> Setting</h1>
+                        <h1 className="flex gap-3 cursor-pointer py-2  px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " ><span><FaRegUser size={30}  /></span>Account</h1>
+                        <h1 className="flex gap-3 cursor-pointer py-2  px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " ><span><IoLogOutOutline size={30}  /></span>Logout</h1>
+                </div>
+            </div>}
+
+
+        </div>
       </div>
 
       <div className="mx-auto">

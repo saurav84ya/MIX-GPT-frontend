@@ -4,6 +4,7 @@ import { BsSearch } from "react-icons/bs";
 import { CgAdd } from "react-icons/cg";
 import { CiSettings } from "react-icons/ci";
 import { RxOpenInNewWindow } from "react-icons/rx";
+import { Link } from "react-router-dom";
 
 export default function Nevagtion({ isOpen, setIsOpen }) {
   const menuRef = useRef(null);
@@ -58,7 +59,7 @@ export default function Nevagtion({ isOpen, setIsOpen }) {
 
           <div className="flex mx-auto justify-around mt-8 border-y-[2px] py-2 ">
             <CiSettings size={30} className="cursor-pointer" />
-            <BiUser size={30} className="cursor-pointer" />
+            <Link to="/userProfile"  ><BiUser size={30} className="cursor-pointer" /></Link>
           </div>
         </div>
       </div>
@@ -66,8 +67,8 @@ export default function Nevagtion({ isOpen, setIsOpen }) {
       {/* mobile */}
       <div
         ref={menuRef}
-        className={`fixed top-0 left-0 h-full w-[300px] bg-[#FFFDF0] z-50  px-4 py-8 
-            transform transition-transform duration-300 border-r-[3px] ${
+        className={`fixed top-1 left-0 w-[300px] bg-[#FFFDF0] z-50  px-4 py-8 
+            transform transition-transform duration-300 border-r-[3px] rounded-xl  ${
               isOpen ? "translate-x-0" : "-translate-x-full"
             } lg:hidden`}
       >
@@ -94,7 +95,7 @@ export default function Nevagtion({ isOpen, setIsOpen }) {
 
           <div>
             <h1 className="font-bold  mt-5">History</h1>
-            <div className="pl-3 mt-3 overflow-y-scroll h-[60vh] ">
+            <div className="pl-3 mt-3 overflow-y-scroll h-[50vh] ">
               <h1 className="p-3 hover:border hover:border-black rounded-lg cursor-pointer hover:bg-slate-100   ">
                 {prompt.slice(0, 30) + "..."}
               </h1>
@@ -103,7 +104,7 @@ export default function Nevagtion({ isOpen, setIsOpen }) {
 
           <div className="flex mx-auto justify-around mt-8 border-y-[2px] py-2 ">
             <CiSettings size={30} className="cursor-pointer" />
-            <BiUser size={30} className="cursor-pointer" />
+            <Link to="/userProfile" ><BiUser size={30} className="cursor-pointer" /></Link>
           </div>
         </div>
       </div>
