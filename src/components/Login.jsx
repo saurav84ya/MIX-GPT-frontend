@@ -6,10 +6,14 @@ import { login } from "../store/authSlice";
 import { Link } from "react-router-dom";
 
 export default function Login() {
+
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  
   const [rec , setRec] = useState(false)
   const { isLoading } = useSelector((state) => state.authSlice);
   const dispatch = useDispatch()

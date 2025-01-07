@@ -6,7 +6,9 @@ import { CiSettings } from "react-icons/ci";
 import { RxOpenInNewWindow } from "react-icons/rx";
 import { Link } from "react-router-dom";
 
-export default function Nevagtion({ isOpen, setIsOpen }) {
+export default function Nevagtion({ isOpen, setIsOpen, allPromptListByUser }) {
+  console.log(allPromptListByUser);
+
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -22,7 +24,6 @@ export default function Nevagtion({ isOpen, setIsOpen }) {
     };
   }, []);
 
-  const prompt = "const [active, setActive] = React.useState('home');";
   return (
     <div>
       {/* dasktop */}
@@ -48,18 +49,29 @@ export default function Nevagtion({ isOpen, setIsOpen }) {
             </select>
           </div>
 
-          <div>
-            <h1 className="font-bold  mt-5">History</h1>
-            <div className="pl-3 mt-3 overflow-y-scroll h-[60vh] ">
-              <h1 className="p-3 hover:border hover:border-black rounded-lg cursor-pointer hover:bg-slate-100   ">
-                {prompt.slice(0, 30) + "..."}
-              </h1>
+          <div className="relative">
+            <h1 className="font-bold mt-5">History</h1>
+            <div className="pl-3 mt-3 overflow-y-scroll h-[60vh]">
+              {allPromptListByUser?.map((item, index) => (
+                <div key={item._id || index} className="relative">
+                  <h1 className="p-3 hover:border border-b hover:border-black rounded-lg cursor-pointer hover:bg-slate-100">
+                    {item.prompt.length > 25
+                      ? item.prompt.slice(0, 25) + "..."
+                      : item.prompt}
+                  </h1>
+                  <div className="absolute left-0 top-0 mt-3 hidden group-hover:block p-3 bg-white border border-gray-300 shadow-lg rounded-lg w-[250px] z-10">
+                    {item.prompt}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
           <div className="flex mx-auto justify-around mt-8 border-y-[2px] py-2 ">
             <CiSettings size={30} className="cursor-pointer" />
-            <Link to="/userProfile"  ><BiUser size={30} className="cursor-pointer" /></Link>
+            <Link to="/userProfile">
+              <BiUser size={30} className="cursor-pointer" />
+            </Link>
           </div>
         </div>
       </div>
@@ -97,14 +109,16 @@ export default function Nevagtion({ isOpen, setIsOpen }) {
             <h1 className="font-bold  mt-5">History</h1>
             <div className="pl-3 mt-3 overflow-y-scroll h-[50vh] ">
               <h1 className="p-3 hover:border hover:border-black rounded-lg cursor-pointer hover:bg-slate-100   ">
-                {prompt.slice(0, 30) + "..."}
+                {/* {prompt.slice(0, 30) + "..."} */}
               </h1>
             </div>
           </div>
 
           <div className="flex mx-auto justify-around mt-8 border-y-[2px] py-2 ">
             <CiSettings size={30} className="cursor-pointer" />
-            <Link to="/userProfile" ><BiUser size={30} className="cursor-pointer" /></Link>
+            <Link to="/userProfile">
+              <BiUser size={30} className="cursor-pointer" />
+            </Link>
           </div>
         </div>
       </div>

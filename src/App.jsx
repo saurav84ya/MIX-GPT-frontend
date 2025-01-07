@@ -16,7 +16,7 @@ export default function App() {
   const { isAuth, user ,isServerLoading } = useSelector((state) => state.authSlice);
   
 
-  console.log("user" ,user)
+  // console.log("user" ,user)
   const dispatch = useDispatch()
 
   useEffect(() => {
