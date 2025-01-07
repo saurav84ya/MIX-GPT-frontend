@@ -59,9 +59,6 @@ export default function Nevagtion({ isOpen, setIsOpen, allPromptListByUser }) {
                       ? item.prompt.slice(0, 25) + "..."
                       : item.prompt}
                   </h1>
-                  <div className="absolute left-0 top-0 mt-3 hidden group-hover:block p-3 bg-white border border-gray-300 shadow-lg rounded-lg w-[250px] z-10">
-                    {item.prompt}
-                  </div>
                 </div>
               ))}
             </div>
@@ -108,9 +105,15 @@ export default function Nevagtion({ isOpen, setIsOpen, allPromptListByUser }) {
           <div>
             <h1 className="font-bold  mt-5">History</h1>
             <div className="pl-3 mt-3 overflow-y-scroll h-[50vh] ">
-              <h1 className="p-3 hover:border hover:border-black rounded-lg cursor-pointer hover:bg-slate-100   ">
-                {/* {prompt.slice(0, 30) + "..."} */}
-              </h1>
+            {allPromptListByUser?.map((item, index) => (
+                <div key={item._id || index} className="relative">
+                  <h1 className="p-3 hover:border border-b hover:border-black rounded-lg cursor-pointer hover:bg-slate-100">
+                    {item.prompt.length > 25
+                      ? item.prompt.slice(0, 25) + "..."
+                      : item.prompt}
+                  </h1>
+                </div>
+              ))}
             </div>
           </div>
 
