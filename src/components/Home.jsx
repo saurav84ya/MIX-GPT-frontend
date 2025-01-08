@@ -35,7 +35,7 @@ export default function Home() {
         <Nevagtion isOpen={isOpen} setIsOpen={setIsOpen} allPromptListByUser={allPromptListByUser} />
 
 
-        <div className="flex-1 relative h-[100vh] overflow-hidden  ">
+        <div className="flex-1 relative h-[100vh] overflow-hidden   ">
         <h1  className="cursor-pointer font-bold text-center mt-2 " >Mix Gpt</h1>
 
          <MainHome isOpen={isOpen} setIsOpen={setIsOpen} user={user} />

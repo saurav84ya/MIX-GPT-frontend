@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function OutPutBox({ responses ,user}) {
+export default function OutPutBox({ responses ,user , isFull}) {
     // console.log(responses[0])
   return (
-    <div className="overflow-y-scroll max-h-[60vh] md:w-[70vw] w-[80vw] lg:w-[700px] xl:w-[900px] ">
-      {responses.map((item, index) => (
+    <div className={`overflow-y-scroll ${ isFull ? " xl:w-[60%]  lg:w-[70%] md:w-[80%] w-[90%] mx-auto max-h-[80vh] " : " max-h-[60vh] md:w-[70vw] w-[80vw] lg:w-[700px] xl:w-[900px] " } ` }>
+      {responses?.map((item, index) => (
         <div key={index} className="p-2 border-b mb-9 ">
           {/* Display the question */}
           <div className="font-semibold flex  justify-end pr-3  items-center gap-3 mb-2"> 

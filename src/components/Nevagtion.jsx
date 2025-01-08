@@ -7,7 +7,7 @@ import { RxOpenInNewWindow } from "react-icons/rx";
 import { Link } from "react-router-dom";
 
 export default function Nevagtion({ isOpen, setIsOpen, allPromptListByUser }) {
-  console.log(allPromptListByUser);
+  // console.log(allPromptListByUser);
 
   const menuRef = useRef(null);
 
@@ -52,14 +52,18 @@ export default function Nevagtion({ isOpen, setIsOpen, allPromptListByUser }) {
           <div className="relative">
             <h1 className="font-bold mt-5">History</h1>
             <div className="pl-3 mt-3 overflow-y-scroll h-[60vh]">
-              {allPromptListByUser?.map((item, index) => (
-                <div key={item._id || index} className="relative">
-                  <h1 className="p-3 hover:border border-b hover:border-black rounded-lg cursor-pointer hover:bg-slate-100">
+            {allPromptListByUser?.map((item, index) => (
+                <div    key={item._id || index} className="relative">
+                  <Link to={`/home/userAskedPrompt/${item._id}`}>
+                  <h1 className="p-3 border-b  rounded-lg cursor-pointer opacity-80 hover:opacity-100 ">
                     {item.prompt.length > 25
                       ? item.prompt.slice(0, 25) + "..."
                       : item.prompt}
                   </h1>
+                  </Link>
+                  
                 </div>
+              
               ))}
             </div>
           </div>
@@ -106,13 +110,17 @@ export default function Nevagtion({ isOpen, setIsOpen, allPromptListByUser }) {
             <h1 className="font-bold  mt-5">History</h1>
             <div className="pl-3 mt-3 overflow-y-scroll h-[50vh] ">
             {allPromptListByUser?.map((item, index) => (
-                <div key={item._id || index} className="relative">
-                  <h1 className="p-3 hover:border border-b hover:border-black rounded-lg cursor-pointer hover:bg-slate-100">
+                <div    key={item._id || index} className="relative">
+                  <Link to={`/home/userAskedPrompt/${item._id}`}>
+                  <h1 className="p-3 border-b  rounded-lg cursor-pointer opacity-80 hover:opacity-100 ">
                     {item.prompt.length > 25
                       ? item.prompt.slice(0, 25) + "..."
                       : item.prompt}
                   </h1>
+                  </Link>
+                  
                 </div>
+              
               ))}
             </div>
           </div>

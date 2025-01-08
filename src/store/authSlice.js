@@ -115,6 +115,22 @@ export const resetPassword = createAsyncThunk(
 )
 
 
+export const logoutUser = createAsyncThunk(
+  "/auth/logout", 
+  async () => {
+  const response = await axios.post(
+    `${import.meta.env.VITE_API_URL}auth/logout`,
+    {}, // Empty body
+    {
+      withCredentials: true, // Include credentials for cross-origin
+    }
+  );
+  console.log(response.data);
+  return response.data;
+});
+
+
+
 
 
 
@@ -125,6 +141,8 @@ const authSlice = createSlice({
     reducers : {},
     extraReducers : (builder) => {
         builder
+
+        
 
 
 
@@ -208,6 +226,13 @@ const authSlice = createSlice({
           .addCase(resetPassword.rejected, (state) => {
             state.otpLoading = false;
           })
+
+
+          .addCase(logoutUser.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.user = null;
+            state.isAuth = false;
+          });
 
     }
 })

@@ -7,7 +7,10 @@ const initialState = {
     loadingPostPromptRequest : false,
     promptResponse : null,
     allPromptListByUser : null,
-    allPromptListByUserLoading : false
+    allPromptListByUserLoading : false,
+
+    promptFullDetailed : null,
+    promptFullDetailedLoading : false
 }
 
 
@@ -36,6 +39,21 @@ export const authPromptListByUser = createAsyncThunk(
         return response.data;
     }
 )
+
+
+export const getPromptFullDetaild = createAsyncThunk(
+    'auth/getPromptFullDetaild',
+
+    async({ userId ,promptId})=> {
+        const response = await axios.get(
+            `${import.meta.env.VITE_API_URL}ai/getPromptAns/${userId}/${promptId}`,
+        )
+
+        // console.log(response.data)
+        return response.data;
+    }
+)
+
 
 
 
@@ -68,6 +86,19 @@ const promptSlice = createSlice({
                 .addCase(authPromptListByUser.rejected, (state) => {
                     state.allPromptListByUserLoading = false;
                 })
+
+
+                .addCase(getPromptFullDetaild.pending, (state) => {
+                    state.promptFullDetailedLoading = true;
+                    })
+                    .addCase(getPromptFullDetaild.fulfilled, (state, action) => {
+                        (state.promptFullDetailedLoading = false),
+                        (state.promptFullDetailed = action.payload.success ? action.payload.promptAns : null);
+                    })
+                    .addCase(getPromptFullDetaild.rejected, (state) => {
+                        state.promptFullDetailedLoading = false;
+                    })
+
     }
 
 })
