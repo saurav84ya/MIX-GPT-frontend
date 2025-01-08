@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getPromptFullDetaild } from "../../store/promptSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { deletePromptHistory, getPromptFullDetaild } from "../../store/promptSlice";
 import OutPutBox from "./OutPutBox";
 import LoadingDark from "./LoadingDark";
 import { MdDeleteOutline } from "react-icons/md";
+import toast from "react-hot-toast";
 
 export default function UserAskedPromptHistoryListingPage() {
   const { user } = useSelector((state) => state.authSlice);
-  const { promptFullDetailedLoading, promptFullDetailed } = useSelector(
+  const { promptFullDetailedLoading } = useSelector(
     (state) => state.promptSlice
   );
 
@@ -18,10 +19,6 @@ export default function UserAskedPromptHistoryListingPage() {
   const [responses, setResponses] = useState();
   const [showDelete ,setShowDelete] = useState(false)
 
-  console.log("v", responses);
-
-  // console.log(promptFullDetailed[0].prompt)
-  // console.log(promptFullDetailed[0].prompt)
 
   useEffect(() => {
     // console.log("user?.id , id" ,user?.id , id)
@@ -44,6 +41,27 @@ export default function UserAskedPromptHistoryListingPage() {
       }
     );
   }, []);
+
+  const navigate = useNavigate()
+
+
+  const deleteFun = () => {
+
+    dispatch(deletePromptHistory({ userId: user?.id, promptId: id }))
+    .then(
+        (data) => {
+          if (data.payload.success) {
+            toast.success(data?.payload?.message);
+            setShowDelete(false)
+            navigate("/home")
+          } else {
+            toast.error(data?.payload?.message || "something went wrong");
+          }
+        }
+      );
+    
+
+  }
 
   return (
     <div className="flex items-center relative justify-center h-[100vh] ">
@@ -79,7 +97,7 @@ export default function UserAskedPromptHistoryListingPage() {
                 Cancle
               </button>
 
-              <button className="bg-blue-500 font-bold text-white px-5 py-3 rounded-2xl ">
+              <button onClick={deleteFun} className="bg-blue-500 font-bold text-white px-5 py-3 rounded-2xl ">
                 Delete
               </button>
             </div>
