@@ -30,7 +30,7 @@ export default function Login() {
 
     dispatch(login(formData))
     .then((data) => {
-      console.log("data",data)
+      // console.log("data",data)
       if(data?.payload?.success){
         toast.success(data?.payload?.message);
         // setAskOtp(true)

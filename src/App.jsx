@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkAuth } from "./store/authSlice";
 import UserProfile from "./components/UserProfile";
 import UserAskedPromptHistoryListingPage from "./components/ui/UserAskedPromptHistoryListingPage";
+import MyAsks from "./components/ui/MyAsks";
 
 export default function App() {
 
@@ -78,6 +79,11 @@ export default function App() {
 <Route
           path="/userProfile"
           element={isAuth ? <UserProfile/> : <AuthPage />}
+        />
+
+<Route
+          path="/home/myAsks"
+          element={isAuth ? <MyAsks/> : <AuthPage />}
         />
 <Route
   path="/home/userAskedPrompt/:id"

@@ -80,7 +80,7 @@ export default function Nevagtion({ isOpen, setIsOpen, allPromptListByUser }) {
       {/* mobile */}
       <div
         ref={menuRef}
-        className={`fixed top-1 left-0 w-[300px] bg-[#FFFDF0] z-50  px-4 py-8 
+        className={`fixed top-1 left-0 w-[300px] shadow-2xl bg-[#FFFDF0] z-50  px-4 py-8 
             transform transition-transform duration-300 border-r-[3px] rounded-xl  ${
               isOpen ? "translate-x-0" : "-translate-x-full"
             } lg:hidden`}

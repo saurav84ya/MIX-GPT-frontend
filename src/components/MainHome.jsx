@@ -162,7 +162,7 @@ export default function MainHome({ isOpen, setIsOpen ,user}) {
 
       { miniMenu &&  <div className="absolute top-[70px] right-0  "  ref={menuRef} >
           <div  className=" bg-[#FFFDF0] w-[200px] p-4  border-[3px] rounded-xl" >
-                  <div className="flex gap-3 cursor-pointer py-2 px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " >  <span><LuNotebookText size={30}  /></span> My Asks </div>
+                  <Link to="/home/myAsks"><div className="flex gap-3 cursor-pointer py-2 px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " >  <span><LuNotebookText size={30}  /></span> My Asks </div></Link>
                   <div className="flex gap-3 cursor-pointer py-2   px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " > <span><IoSettingsOutline size={30}  /></span> Setting</div>
                   <Link to="/userProfile" ><div className="flex gap-3 cursor-pointer py-2  px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " ><span><FaRegUser size={30}  /></span>Account</div></Link>
                   <div onClick={()=> setLogout(true) } className="flex gap-3 cursor-pointer py-2  px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " ><span><IoLogOutOutline size={30}  /></span>Logout</div>
@@ -185,7 +185,7 @@ export default function MainHome({ isOpen, setIsOpen ,user}) {
     What can I help with?
   </h1>}
 
-  <div className=" rounded-xl bg-white border p-4 mt-4 ">
+  <div className=" rounded-xl bg-white border p-4 mt-4 shadow-xl ">
     <textarea
     onChange={(e) =>
       setFormData({ ...formData, prompt: e.target.value })
