@@ -77,7 +77,7 @@ export default function App() {
         />
 
 <Route
-          path="/userProfile"
+          path="/home/userProfile"
           element={isAuth ? <UserProfile/> : <AuthPage />}
         />
 

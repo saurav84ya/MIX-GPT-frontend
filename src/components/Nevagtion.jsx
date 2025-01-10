@@ -127,7 +127,7 @@ export default function Nevagtion({ isOpen, setIsOpen, allPromptListByUser }) {
 
           <div className="flex mx-auto justify-around mt-8 border-y-[2px] py-2 ">
             <CiSettings size={30} className="cursor-pointer" />
-            <Link to="/userProfile">
+            <Link to="/home/userProfile">
               <BiUser size={30} className="cursor-pointer" />
             </Link>
           </div>

@@ -164,7 +164,7 @@ export default function MainHome({ isOpen, setIsOpen ,user}) {
           <div  className=" bg-[#FFFDF0] w-[200px] p-4  border-[3px] rounded-xl" >
                   <Link to="/home/myAsks"><div className="flex gap-3 cursor-pointer py-2 px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " >  <span><LuNotebookText size={30}  /></span> My Asks </div></Link>
                   <div className="flex gap-3 cursor-pointer py-2   px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " > <span><IoSettingsOutline size={30}  /></span> Setting</div>
-                  <Link to="/userProfile" ><div className="flex gap-3 cursor-pointer py-2  px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " ><span><FaRegUser size={30}  /></span>Account</div></Link>
+                  <Link to="/home/userProfile" ><div className="flex gap-3 cursor-pointer py-2  px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " ><span><FaRegUser size={30}  /></span>Account</div></Link>
                   <div onClick={()=> setLogout(true) } className="flex gap-3 cursor-pointer py-2  px-1 border-[2px] rounded-lg  border-[#FFFDF0] hover:border-black " ><span><IoLogOutOutline size={30}  /></span>Logout</div>
           </div>
       </div>}
