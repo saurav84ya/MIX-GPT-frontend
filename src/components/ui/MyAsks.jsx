@@ -30,6 +30,7 @@ export default function MyAsks() {
     }
   }, [dispatch, allPromptListByUser, user]);
 
+  
   const loadAns = (id) => {
     dispatch(getPromptFullDetaild({ userId: user?.id, promptId: id })).then(
       (data) => {
