@@ -31,7 +31,6 @@ export default function MyAsks() {
   }, [dispatch, allPromptListByUser, user]);
 
   const loadAns = (id) => {
-    // console.log("hii")
     dispatch(getPromptFullDetaild({ userId: user?.id, promptId: id })).then(
       (data) => {
         if (data.payload.success) {
