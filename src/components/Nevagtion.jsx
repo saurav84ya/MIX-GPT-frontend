@@ -1,12 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { BiNews, BiUser } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 import { CgAdd } from "react-icons/cg";
 import { CiSettings } from "react-icons/ci";
 import { RxOpenInNewWindow } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import MyContext from "../context/MyContext";
 
-export default function Nevagtion({ isOpen, setIsOpen, allPromptListByUser }) {
+export default function Nevagtion({ isOpen, setIsOpen, setShowSearch,allPromptListByUser }) {
+
+  const {newDiloge} = useContext(MyContext)
   // console.log(allPromptListByUser);
 
   const menuRef = useRef(null);
@@ -30,8 +33,8 @@ export default function Nevagtion({ isOpen, setIsOpen, allPromptListByUser }) {
       <div className=" px-4 py-8 w-[300px] hidden lg:flex h-[100vh] overflow-hidden border-r-[3px] ">
         <div className=" w-full ">
           <div className="flex py-4 justify-between ">
-            <BsSearch size={30} className="cursor-pointer" />
-            <RxOpenInNewWindow size={30} className="cursor-pointer" />
+            <BsSearch onClick={() => setShowSearch(true)} size={30} className="cursor-pointer" />
+            <RxOpenInNewWindow       onClick={newDiloge} size={30} className="cursor-pointer" />
           </div>
 
           <h1 className="font-bold text-2xl text-center ">Mix Gpt</h1>
@@ -87,8 +90,8 @@ export default function Nevagtion({ isOpen, setIsOpen, allPromptListByUser }) {
       >
         <div className=" w-full ">
           <div className="flex py-4 justify-between ">
-            <BsSearch size={30} className="cursor-pointer" />
-            <RxOpenInNewWindow size={30} className="cursor-pointer" />
+            <BsSearch onClick={() => setShowSearch(true)} size={30} className="cursor-pointer" />
+            <RxOpenInNewWindow   onClick={newDiloge}   size={30} className="cursor-pointer" />
           </div>
 
           <h1 className="font-bold text-2xl text-center ">Mix Gpt</h1>

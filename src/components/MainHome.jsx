@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { BiIntersect, BiMenu } from "react-icons/bi";
 import { FaRegUser } from "react-icons/fa";
 import { IoLogOutOutline, IoSettingsOutline } from "react-icons/io5";
@@ -14,11 +14,22 @@ import OutPutBox from "./ui/OutPutBox";
 import { HiOutlineLogout } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../store/authSlice";
+import MyContext from "../context/MyContext";
 
 export default function MainHome({ isOpen, setIsOpen ,user}) {
 
     const [miniMenu , setMiniMenu] = useState(false)
-    const [greet , setGreet] = useState(true)
+
+    const {responses, setResponses,greet ,newDiloge, setGreet} = useContext(MyContext)
+
+
+
+  //   const [greet , setGreet] = useState(true)
+  // const [responses, setResponses] = useState([])
+
+
+
+
     const[logout , setLogout] = useState(false)
 
     // console.log("user",user?.name?.slice(0,1))
@@ -50,7 +61,6 @@ export default function MainHome({ isOpen, setIsOpen ,user}) {
     email: user?.email,
   });
 
-  const [responses, setResponses] = useState([])
 
 
   // console.log("responses",responses)
@@ -143,7 +153,7 @@ export default function MainHome({ isOpen, setIsOpen ,user}) {
     <BiMenu size={30} />
   </div>
   <div>
-    <RxOpenInNewWindow className="cursor-pointer" size={30} />
+    <RxOpenInNewWindow  onClick={newDiloge} className="cursor-pointer" size={30} />
   </div>
   
 </div>

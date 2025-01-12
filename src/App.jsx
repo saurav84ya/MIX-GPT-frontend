@@ -12,6 +12,7 @@ import { checkAuth } from "./store/authSlice";
 import UserProfile from "./components/UserProfile";
 import UserAskedPromptHistoryListingPage from "./components/ui/UserAskedPromptHistoryListingPage";
 import MyAsks from "./components/ui/MyAsks";
+import Test from "./components/ui/Test";
 
 export default function App() {
 
@@ -112,6 +113,8 @@ export default function App() {
         />
         <Route path="/recovry" element={isAuth ? <Home /> : <Recovery />} />
         <Route path="*" element={<NoPage />} />
+        {/* <Route path="*" element={<Test />} /> */}
+
       </Routes>
     </BrowserRouter>
     
