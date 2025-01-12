@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaCamera, FaEdit, FaTrash, FaKey, FaSignOutAlt } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserData } from '../store/authSlice';
 
 export default function UserProfile() {
   const [isEditing, setIsEditing] = useState(false);
@@ -42,6 +44,33 @@ export default function UserProfile() {
     alert('Information updated');
   };
 
+
+
+  const dispatch = useDispatch()
+
+  const [userData , setUserData] = useState(null)
+
+  // console.log("userData" ,userData)
+
+  const {user} = useSelector((state) => state.authSlice)
+
+
+  useEffect(() => {
+    if(userData == null){
+    dispatch(getUserData(user?.email))
+      .then((data) => {
+        // console.log("data" ,data)
+        setUserData({
+          name : data?.payload.user.name,
+          email : data?.payload.user.email,
+          profileUrl : data?.payload.user.profileUrl,
+          id :data?.payload.user._id
+        })
+      })
+    
+    }
+  },[])
+
   return (
     <div className="flex justify-center items-center bg-gray-50 min-h-screen">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
@@ -49,8 +78,8 @@ export default function UserProfile() {
         <div className="flex justify-center mb-6 relative">
           <div className="relative">
             <img
-              src={newProfileImage || userInfo.profileImage}
-              alt="Profile"
+              src="https://www.flaticon.com/free-icon/user-profile_10337609" 
+              // alt="Profile"
               className="w-32 h-32 rounded-full object-cover border-4 border-blue-500 shadow-lg"
             />
             <label
@@ -113,8 +142,8 @@ export default function UserProfile() {
             </form>
           ) : (
             <div>
-              <h2 className="text-xl font-semibold text-gray-800">{userInfo.name}</h2>
-              <p className="text-gray-600 mb-4">{userInfo.email}</p>
+              <h2 className="text-xl font-semibold text-gray-800">{userData?.name}</h2>
+              <p className="text-gray-600 mb-4">{userData?.email}</p>
 
               <div className="flex justify-center gap-6">
                 <button

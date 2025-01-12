@@ -130,6 +130,17 @@ export const logoutUser = createAsyncThunk(
 });
 
 
+export const getUserData = createAsyncThunk(
+  "/auth/getUserData", 
+  async (email) => {
+  const response = await axios.get(
+    `${import.meta.env.VITE_API_URL}auth/getUserData/${email}`,
+  );
+  // console.log(response.data);
+  return response.data;
+});
+
+
 
 
 
