@@ -73,7 +73,7 @@ export default function Nevagtion({ isOpen, setIsOpen, setShowSearch,allPromptLi
 
           <div className="flex mx-auto justify-around mt-8 border-y-[2px] py-2 ">
             <CiSettings size={30} className="cursor-pointer" />
-            <Link to="/userProfile">
+            <Link to="/home/userProfile">
               <BiUser size={30} className="cursor-pointer" />
             </Link>
           </div>
@@ -110,23 +110,27 @@ export default function Nevagtion({ isOpen, setIsOpen, setShowSearch,allPromptLi
           </div>
 
           <div>
-            <h1 className="font-bold  mt-5">History</h1>
-            <div className="pl-3 mt-3 overflow-y-scroll h-[50vh] ">
+      <h1 className="font-bold mt-5">History</h1>
+      <div className="pl-3 mt-3 overflow-y-scroll h-[50vh]">
+        {allPromptListByUser?.length === 0 ? (
+          <div className="text-center text-gray-400 mt-5">No History</div>
+        ) : (
+          <>
             {allPromptListByUser?.map((item, index) => (
-                <div    key={item._id || index} className="relative">
-                  <Link to={`/home/userAskedPrompt/${item._id}`}>
-                  <h1 className="p-3 border-b  rounded-lg cursor-pointer opacity-80 hover:opacity-100 ">
+              <div key={item._id || index} className="relative">
+                <Link to={`/home/userAskedPrompt/${item._id}`}>
+                  <h1 className="p-3 border-b rounded-lg cursor-pointer opacity-80 hover:opacity-100">
                     {item.prompt.length > 25
-                      ? item.prompt.slice(0, 25) + "..."
+                      ? item.prompt.slice(0, 25) + '...'
                       : item.prompt}
                   </h1>
-                  </Link>
-                  
-                </div>
-              
-              ))}
-            </div>
-          </div>
+                </Link>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+    </div>
 
           <div className="flex mx-auto justify-around mt-8 border-y-[2px] py-2 ">
             <CiSettings size={30} className="cursor-pointer" />

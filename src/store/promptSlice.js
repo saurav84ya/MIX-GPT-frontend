@@ -68,6 +68,19 @@ export const deletePromptHistory = createAsyncThunk(
     }
 )
 
+export const deleteAllPrompt = createAsyncThunk(
+    'auth/deleteAllPrompt',
+
+    async(userId)=> {
+        const response = await axios.delete(
+            `${import.meta.env.VITE_API_URL}ai/deleteAllPrompt/${userId}`,
+        )
+
+        // console.log(response.data)
+        return response.data;
+    }
+)
+
 
 
 
