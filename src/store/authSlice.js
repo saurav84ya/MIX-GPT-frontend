@@ -140,6 +140,16 @@ export const getUserData = createAsyncThunk(
   return response.data;
 });
 
+export const deleteUser = createAsyncThunk(
+  "/auth/deleteUser", 
+  async (userId) => {
+  const response = await axios.delete(
+    `${import.meta.env.VITE_API_URL}auth/deleteUserAccount/${userId}`,
+  );
+  // console.log(response.data);
+  return response.data;
+});
+
 
 
 
