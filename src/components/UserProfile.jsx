@@ -92,7 +92,8 @@ export default function UserProfile() {
             <h2 className="text-lg font-semibold text-gray-800 mb-4">
               Are you sure you want to delete your account?
             </h2>
-            <div className="flex gap-4 justify-center ">
+            <div className="flex gap-4 justify-center
+             ">
               <button
                 onClick={handleDeleteAccount}
                 disabled={countdown > 0}
