@@ -11,20 +11,20 @@ export default function UserProfile() {
   const [askDeletePrompt, setaskDeletePrompt] = useState(false);
   const [askDeleteAccount, setaskDeleteAccount] = useState(false);
   const [countdown, setCountdown] = useState(30); // Countdown for the delete confirmation
+  const [newName, setNewName] = useState("");
+  const [newEmail, setNewEmail] = useState("");
   const suggestions = ["Change Password", "Change Email", "Settings", "Logout"];
   const dispatch = useDispatch();
   const [userData, setUserData] = useState(null);
   const { user } = useSelector((state) => state.authSlice);
 
   useEffect(() => {
-    if (userData == null) {
+    if (!userData) {
       dispatch(getUserData(user?.email)).then((data) => {
-        setUserData({
-          name: data?.payload.user.name,
-          email: data?.payload.user.email,
-          profileUrl: data?.payload.user.profileUrl,
-          id: data?.payload.user._id,
-        });
+        const userInfo = data?.payload.user;
+        setUserData(userInfo);
+        setNewName(userInfo?.name);
+        setNewEmail(userInfo?.email);
       });
     }
   }, [userData, dispatch, user]);
@@ -46,32 +46,32 @@ export default function UserProfile() {
     return () => clearInterval(timer);
   }, [askDeleteAccount]);
 
-  const handleEditClick = () => {
-    setIsEditing(!isEditing);
+  const handleUpdateInfo = () => {
+    console.log("New Name:", newName);
+    console.log("New Email:", newEmail);
+    setIsEditing(false);
   };
 
   const handleDeleteAccount = () => {
-    dispatch(deleteUser(user?.id))
-      .then((data) => {
-        if (data?.payload.success) {
-          window.location.href = "/";
-        } else {
-          toast.error(data?.payload.message || "Error while Deleting Account");
-        }
-      });
+    dispatch(deleteUser(user?.id)).then((data) => {
+      if (data?.payload.success) {
+        window.location.href = "/";
+      } else {
+        toast.error(data?.payload.message || "Error while Deleting Account");
+      }
+    });
     setaskDeleteAccount(false);
   };
 
   const deletAllPromptFun = () => {
-    dispatch(deleteAllPrompt(user?.id))
-      .then((data) => {
-        if (data?.payload.success) {
-          toast.success(data?.payload?.message);
-          setaskDeletePrompt(false);
-        } else {
-          toast.error(data?.payload?.message || "Something went wrong");
-        }
-      });
+    dispatch(deleteAllPrompt(user?.id)).then((data) => {
+      if (data?.payload.success) {
+        toast.success(data?.payload?.message);
+        setaskDeletePrompt(false);
+      } else {
+        toast.error(data?.payload?.message || "Something went wrong");
+      }
+    });
   };
 
   return (
@@ -85,15 +85,13 @@ export default function UserProfile() {
           />
         </div>
       )}
-
       {askDeleteAccount && (
         <div className="absolute">
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">
               Are you sure you want to delete your account?
             </h2>
-            <div className="flex gap-4 justify-center
-             ">
+            <div className="flex gap-4 justify-center">
               <button
                 onClick={handleDeleteAccount}
                 disabled={countdown > 0}
@@ -115,9 +113,7 @@ export default function UserProfile() {
           </div>
         </div>
       )}
-
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
-        {/* Profile Section */}
         <div className="flex justify-center mb-6 relative">
           <div className="relative">
             <img
@@ -132,39 +128,76 @@ export default function UserProfile() {
             </label>
           </div>
         </div>
-
-        {/* User Information Section */}
         <div className="text-center mb-8">
-          <h2 className="text-xl font-semibold text-gray-800">
-            {userData?.name}
-          </h2>
-          <p className="text-gray-600 mb-4">{userData?.email}</p>
-
-          <div className="flex justify-center gap-6">
-            <button
-              onClick={() => setaskDeleteAccount(true)}
-              className="flex items-center gap-2 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300"
-            >
-              <FaTrash /> Delete Account
-            </button>
-            <button
-              onClick={() => setaskDeletePrompt(true)}
-              className="flex items-center gap-2 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300"
-            >
-              <FaTrash /> Delete All Prompts
-            </button>
-          </div>
-
-          <div className="mt-6 text-center">
-            <button
-              onClick={handleEditClick}
-              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300"
-            >
-              <div className="flex items-center gap-2">
-                <FaEdit /> <h1>Edit Info</h1>
+          {isEditing ? (
+            <div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Update Name
+                </label>
+                <input
+                  type="text"
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  className="w-full p-2 border rounded-lg"
+                />
               </div>
-            </button>
-          </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2">
+                  Update Email
+                </label>
+                <input
+                  type="email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  className="w-full p-2 border rounded-lg"
+                />
+              </div>
+              <button
+                onClick={handleUpdateInfo}
+                className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
+              >
+              
+                Update Info
+              </button>
+              <button
+                onClick={() => setIsEditing(false)}
+                className="bg-red-500 ml-4 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300"
+              >Close 
+              </button> 
+            </div>
+          ) : (
+            <>
+              <h2 className="text-xl font-semibold text-gray-800">
+                {userData?.name}
+              </h2>
+              <p className="text-gray-600 mb-4">{userData?.email}</p>
+              <div className="flex justify-center gap-6">
+                <button
+                  onClick={() => setaskDeleteAccount(true)}
+                  className="flex items-center gap-2 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300"
+                >
+                  <FaTrash /> Delete Account
+                </button>
+                <button
+                  onClick={() => setaskDeletePrompt(true)}
+                  className="flex items-center gap-2 bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300"
+                >
+                  <FaTrash /> Delete All Prompts
+                </button>
+              </div>
+              <div className="mt-6 text-center">
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300"
+                >
+                  <div className="flex items-center gap-2">
+                    <FaEdit /> <h1>Edit Info</h1>
+                  </div>
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
