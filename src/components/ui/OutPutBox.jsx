@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function OutPutBox({ responses ,user , isFull}) {
+
+  useEffect(() => {
+    console.log("Fetched responses:", responses);
+  }, [responses]);
+  
     // console.log(responses[0])
   return (
     <div className={`overflow-y-scroll ${ isFull ? " xl:w-[60%]  lg:w-[70%] md:w-[80%] w-[90%] mx-auto max-h-[80vh] " : " max-h-[60vh] md:w-[70vw] w-[80vw] lg:w-[700px] xl:w-[900px] " } ` }>
