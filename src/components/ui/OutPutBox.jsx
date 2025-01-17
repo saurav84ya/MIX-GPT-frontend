@@ -4,6 +4,9 @@ export default function OutPutBox({ responses ,user , isFull}) {
 
   useEffect(() => {
     console.log("Fetched responses:", responses);
+    if (responses.length > 0) {
+      console.log("Type of response:", typeof responses[0].response);
+    }
   }, [responses]);
   
     // console.log(responses[0])
