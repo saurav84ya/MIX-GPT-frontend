@@ -67,6 +67,7 @@ export default function MainHome({ isOpen, setIsOpen, user }) {
   const onSubmit = async () => {
     dispatch(authPromptAskRequest(formData)).then((data) => {
       if (data.payload.success) {
+        console.log("data" , data)
         setResponses((prevResponses) => [
           ...prevResponses,
           {
