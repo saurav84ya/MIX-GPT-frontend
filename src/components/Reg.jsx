@@ -48,7 +48,6 @@ export default function Reg() {
 
     dispatch(reg(formData))
     .then((data) => {
-      console.log("data",data)
       if(data?.payload?.success){
         toast.success(data?.payload?.message);
         setAskOtp(true)
@@ -57,11 +56,9 @@ export default function Reg() {
       }
     }) 
     // Add your logic here to handle form submission
-    console.log(formData);
     };
 
 //     const apiUrl = import.meta.env.VITE_API_URL;
-// console.log('API URL:', apiUrl);
 
 
     const getOtp = async () => {
@@ -76,7 +73,6 @@ export default function Reg() {
 
       dispatch(getOtpForReg(formData?.email))
       .then((data) => {
-        console.log("data",data)
         if(data?.payload?.success){
           toast.success(data?.payload?.message);
           setAskOtp(true)
@@ -88,7 +84,7 @@ export default function Reg() {
       
     }
 
-    // console.log("import.meta.env.SERVER"  ,import.meta.env.VITE_API_URL_SERVE)
+  
 
   // Check if the button should be disabled (at least one field is empty)
   const btnDisabled =

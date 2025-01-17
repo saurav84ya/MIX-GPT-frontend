@@ -21,14 +21,7 @@ export default function MainHome({ isOpen, setIsOpen, user }) {
 
   const { responses, setResponses, greet, newDiloge, setGreet , model } =
     useContext(MyContext);
-
-  //   const [greet , setGreet] = useState(true)
-  // const [responses, setResponses] = useState([])
-
   const [logout, setLogout] = useState(false);
-
-  console.log("responses" ,responses)
-  // console.log("user",user?.name?.slice(0,1))
 
   const menuRef = useRef(null);
 
@@ -67,7 +60,6 @@ export default function MainHome({ isOpen, setIsOpen, user }) {
   const onSubmit = async () => {
     dispatch(authPromptAskRequest(formData)).then((data) => {
       if (data.payload.success) {
-        console.log("data" , data)
         setResponses((prevResponses) => [
           ...prevResponses,
           {

@@ -16,7 +16,6 @@ const MyProvider = ({children}) => {
 
 
     const newDiloge = () => {
-        console.log("hii done")
         setGreet(true)
         setResponses([])
       }

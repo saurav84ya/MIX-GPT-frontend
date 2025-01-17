@@ -29,11 +29,10 @@ export default function ForgotPassword() {
 
   const onsubmit = (e) => {
     e.preventDefault();
-    // console.log("formData",formData);
+
     if(formData.email !== ""){
       dispatch(getOtpForRec(formData?.email))
       .then((data) => {
-        console.log("data" , data.payload.success) 
         if(data.payload.success){
           toast.success(data.payload.message)
           setAskOtp(true)
@@ -48,11 +47,10 @@ export default function ForgotPassword() {
 
   const verifyOtpFun = (e) => {
     e.preventDefault();
-    // console.log("formData",formData);
+
     if(formData.email !== "" && formData.otp !== ""){
       dispatch(verifyOtp(formData))
       .then((data) => {
-        console.log("data" , data) 
         if(data.payload.success){
           toast.success(data.payload.message)
           setAskNewPass(true)
@@ -78,7 +76,7 @@ export default function ForgotPassword() {
       return toast.error("Password and Confirm Password should be same")
    }
 
-   console.log("formData?.email , newPass.password , formData?.otp" ,formData?.email , newPass.password , formData?.otp)
+
 
 
   const newPasswordFormData = {
@@ -91,7 +89,6 @@ export default function ForgotPassword() {
     dispatch(resetPassword(newPasswordFormData))
 
     .then((data) => {
-      console.log("data" , data)
       if(data.payload.success){
         
         toast.success(data.payload.message)

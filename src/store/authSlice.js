@@ -80,7 +80,6 @@ export const checkAuth = createAsyncThunk(
         },
       }
     );
-    // console.log("response?.data",response?.data)a
     return response.data;
   }
 );
@@ -125,7 +124,6 @@ export const logoutUser = createAsyncThunk(
       withCredentials: true, // Include credentials for cross-origin
     }
   );
-  console.log(response.data);
   return response.data;
 });
 
@@ -136,7 +134,6 @@ export const getUserData = createAsyncThunk(
   const response = await axios.get(
     `${import.meta.env.VITE_API_URL}auth/getUserData/${email}`,
   );
-  // console.log(response.data);
   return response.data;
 });
 
@@ -146,7 +143,6 @@ export const deleteUser = createAsyncThunk(
   const response = await axios.delete(
     `${import.meta.env.VITE_API_URL}auth/deleteUserAccount/${userId}`,
   );
-  // console.log(response.data);
   return response.data;
 });
 
@@ -160,7 +156,6 @@ export const updateUserName = createAsyncThunk(
       formData
     }
   );
-  // console.log(response.data);
   return response.data;
 });
 
@@ -174,7 +169,6 @@ export const updateUserEmail = createAsyncThunk(
       formData
     }
   );
-  // console.log(response.data);
   return response.data;
 });
 

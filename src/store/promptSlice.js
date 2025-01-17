@@ -35,7 +35,6 @@ export const authPromptListByUser = createAsyncThunk(
             `${import.meta.env.VITE_API_URL}ai/getPrompts/${userId}`,
         )
 
-        // console.log(response.data)
         return response.data;
     }
 )
@@ -49,7 +48,6 @@ export const getPromptFullDetaild = createAsyncThunk(
             `${import.meta.env.VITE_API_URL}ai/getPromptAns/${userId}/${promptId}`,
         )
 
-        // console.log(response.data)
         return response.data;
     }
 )
@@ -63,7 +61,6 @@ export const deletePromptHistory = createAsyncThunk(
             `${import.meta.env.VITE_API_URL}ai/deletePromptHistory/${userId}/${promptId}`,
         )
 
-        // console.log(response.data)
         return response.data;
     }
 )
@@ -76,7 +73,6 @@ export const deleteAllPrompt = createAsyncThunk(
             `${import.meta.env.VITE_API_URL}ai/deleteAllPrompt/${userId}`,
         )
 
-        // console.log(response.data)
         return response.data;
     }
 )

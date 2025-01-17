@@ -20,7 +20,7 @@ export default function UserProfile() {
   const [userData, setUserData] = useState(null);
   const { user ,otpLoading} = useSelector((state) => state.authSlice);
 
-  // console.log(otpLoading,"otpLoading")
+
 
   useEffect(() => {
     if (!userData) {

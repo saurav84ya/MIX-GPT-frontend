@@ -26,14 +26,11 @@ export default function Login() {
     if(!emailRegex.test(formData.email) || !formData.password || !formData.email ) { 
       return toast.error("Plz Fill the data properly");
     }
-    // console.log("formData" ,formData)
 
     dispatch(login(formData))
     .then((data) => {
-      // console.log("data",data)
       if(data?.payload?.success){
         toast.success(data?.payload?.message);
-        // setAskOtp(true)
       }else{
         toast.error(data?.payload?.message);
         setRec(true)

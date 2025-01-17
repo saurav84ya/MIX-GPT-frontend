@@ -21,7 +21,7 @@ export default function UserAskedPromptHistoryListingPage() {
 
 
   useEffect(() => {
-    // console.log("user?.id , id" ,user?.id , id)
+  
     dispatch(getPromptFullDetaild({ userId: user?.id, promptId: id })).then(
       (data) => {
         setResponses(() => [
