@@ -28,8 +28,7 @@ export default function UserAskedPromptHistoryListingPage() {
           {
             question: data?.payload?.promptAns[0].prompt,
             response:
-              data?.payload?.promptAns[0].answer.candidates[0].content.parts[0]
-                .text,
+              data?.payload?.promptAns[0].answer,
           },
         ]);
 

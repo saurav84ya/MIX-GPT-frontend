@@ -9,8 +9,7 @@ import MyContext from "../context/MyContext";
 
 export default function Nevagtion({ isOpen, setIsOpen, setShowSearch,allPromptListByUser }) {
 
-  const {newDiloge} = useContext(MyContext)
-  // console.log(allPromptListByUser);
+  const {newDiloge , setModel ,model}  = useContext(MyContext)
 
   const menuRef = useRef(null);
 
@@ -41,38 +40,45 @@ export default function Nevagtion({ isOpen, setIsOpen, setShowSearch,allPromptLi
           <div className="flex justify-between mt-5 items-center ">
             <h1>Select Model</h1>
             <select
-              className="p-2 font-bold border border-black  "
-              name="Model"
-              id=""
-            >
-              <option className="" value="gimini">
-                Gimini
-              </option>
-              <option value="chatGpt">chatGpt</option>
-            </select>
+      onChange={(e) => setModel(e.target.value)} // Directly setting the state here
+      value={model} // Ensures the select is controlled
+      className="p-2 font-bold border border-black"
+      name="Model"
+      id="model-select"
+    >
+        <option value="gemini">Gemini</option>
+      <option value="llama">Llama-3.2</option>
+      <option value="gemma2">Gemma2-9b</option>
+    </select>
           </div>
 
           <div className="relative">
             <h1 className="font-bold mt-5">History</h1>
             <div className="pl-3 mt-3 overflow-y-scroll h-[60vh]">
+            {allPromptListByUser?.length === 0 ? (
+          <div className="text-center text-gray-400 mt-5">No History</div>
+        ) : (
+          <>
             {allPromptListByUser?.map((item, index) => (
-                <div    key={item._id || index} className="relative">
-                  <Link to={`/home/userAskedPrompt/${item._id}`}>
-                  <h1 className="p-3 border-b  rounded-lg cursor-pointer opacity-80 hover:opacity-100 ">
+              <div key={item._id || index} className="relative">
+                <Link to={`/home/userAskedPrompt/${item._id}`}>
+                  <h1 className="p-3 border-b rounded-lg cursor-pointer opacity-80 hover:opacity-100">
                     {item.prompt.length > 25
-                      ? item.prompt.slice(0, 25) + "..."
+                      ? item.prompt.slice(0, 25) + '...'
                       : item.prompt}
                   </h1>
-                  </Link>
-                  
-                </div>
-              
-              ))}
+                </Link>
+              </div>
+            ))}
+          </>
+        )}
             </div>
           </div>
 
           <div className="flex mx-auto justify-around mt-8 border-y-[2px] py-2 ">
+          <Link to="/home/setting">
             <CiSettings size={30} className="cursor-pointer" />
+            </Link>
             <Link to="/home/userProfile">
               <BiUser size={30} className="cursor-pointer" />
             </Link>
@@ -98,15 +104,16 @@ export default function Nevagtion({ isOpen, setIsOpen, setShowSearch,allPromptLi
           <div className="flex justify-between mt-5 items-center ">
             <h1>Select Model</h1>
             <select
-              className="p-2 font-bold border border-black  "
-              name="Model"
-              id=""
-            >
-              <option className="" value="gimini">
-                Gimini
-              </option>
-              <option value="chatGpt">chatGpt</option>
-            </select>
+      onChange={(e) => setModel(e.target.value)} // Directly setting the state here
+      value={model} // Ensures the select is controlled
+      className="p-2 font-bold border border-black"
+      name="Model"
+      id="model-select"
+    >
+      <option value="gemini">Gemini</option>
+      <option value="llama">Llama-3.2</option>
+      <option value="gemma2">Gemma2-9b</option>
+    </select>
           </div>
 
           <div>
@@ -133,7 +140,9 @@ export default function Nevagtion({ isOpen, setIsOpen, setShowSearch,allPromptLi
     </div>
 
           <div className="flex mx-auto justify-around mt-8 border-y-[2px] py-2 ">
+          <Link to="/home/setting">
             <CiSettings size={30} className="cursor-pointer" />
+            </Link>
             <Link to="/home/userProfile">
               <BiUser size={30} className="cursor-pointer" />
             </Link>

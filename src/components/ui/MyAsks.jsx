@@ -40,8 +40,7 @@ export default function MyAsks() {
             [id]: {
               question: data?.payload?.promptAns[0].prompt,
               response:
-                data?.payload?.promptAns[0].answer.candidates[0].content.parts[0]
-                  .text,
+                data?.payload?.promptAns[0].answer,
             },
           }));
         } else {
@@ -60,6 +59,9 @@ export default function MyAsks() {
       ) : (
         <div className="min-h-[100vh] ">
           <div className=" xl:w-[1200px] lg:w-[900px] md:w-[600px] w-[90%] mt-10 mx-auto ">
+            {
+              allPromptListByUser.length == 0 ? "No recent History" : null
+            }
             {allPromptListByUser?.map((item, index) => (
               <div onClick={() => loadAns(item._id)} key={index}>
                 <Accordion type="single" collapsible>

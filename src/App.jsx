@@ -13,6 +13,7 @@ import UserProfile from "./components/UserProfile";
 import UserAskedPromptHistoryListingPage from "./components/ui/UserAskedPromptHistoryListingPage";
 import MyAsks from "./components/ui/MyAsks";
 import Test from "./components/ui/Test";
+import SettingPage from "./components/SettingPage"
 
 export default function App() {
 
@@ -89,6 +90,11 @@ export default function App() {
 <Route
   path="/home/userAskedPrompt/:id"
   element={isAuth ? <UserAskedPromptHistoryListingPage /> : <AuthPage />}
+/>
+
+<Route
+  path="/home/setting"
+  element={isAuth ? <SettingPage/>  : <AuthPage />}
 />
 
         <Route

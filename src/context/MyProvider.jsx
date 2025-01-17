@@ -10,6 +10,7 @@ const MyProvider = ({children}) => {
 
         const [greet , setGreet] = useState(true)
           const [responses, setResponses] = useState([])
+          const [model , setModel] = useState("gemini")
 
 
 
@@ -22,7 +23,7 @@ const MyProvider = ({children}) => {
     
 
     return (
-        <MyContext.Provider value={{theme ,name , setName, newDiloge,setTheme,responses, setResponses,greet , setGreet}}  >
+        <MyContext.Provider value={{theme ,name,model , setModel , setName, newDiloge,setTheme,responses, setResponses,greet , setGreet}}  >
             {
                 children
             }
