@@ -20,31 +20,29 @@ export default function OutPutBox({ responses ,user , isFull}) {
 
           {/* Render response content dynamically */}
           <div className="text-gray-700">
-            {item.response.split("\n").map((line, idx) => {
-              if (line.startsWith("**")) {
-                // Handle bold text as headers
-                return (
-                  <p key={idx} className="font-bold mt-2">
-                    {line.replace(/\*\*/g, "")}
-                  </p>
-                );
-              } else if (line.startsWith("*")) {
-                // Handle bullet points
-                return (
-                  <p key={idx} className="ml-4 list-disc">
-                    {line.replace(/\*/g, "")}
-                  </p>
-                );
-              } else {
-                // Handle plain text
-                return (
-                  <p key={idx} className="mt-1">
-                    {line}
-                  </p>
-                );
-              }
-            })}
-          </div>
+  {(item.response ?? "").split("\n").map((line, idx) => {
+    if (line.startsWith("**")) {
+      return (
+        <p key={idx} className="font-bold mt-2">
+          {line.replace(/\*\*/g, "")}
+        </p>
+      );
+    } else if (line.startsWith("*")) {
+      return (
+        <p key={idx} className="ml-4 list-disc">
+          {line.replace(/\*/g, "")}
+        </p>
+      );
+    } else {
+      return (
+        <p key={idx} className="mt-1">
+          {line}
+        </p>
+      );
+    }
+  })}
+</div>
+
         </div>
       ))}
     </div>
