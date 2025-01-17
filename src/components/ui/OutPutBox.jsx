@@ -2,14 +2,7 @@ import React, { useEffect } from "react";
 
 export default function OutPutBox({ responses ,user , isFull}) {
 
-  useEffect(() => {
-    console.log("Fetched responses:", responses);
-    if (responses.length > 0) {
-      console.log("Type of response:", typeof responses[0].response);
-    }
-  }, [responses]);
-  
-    console.log("hii")
+
   return (
     <div className={`overflow-y-scroll ${ isFull ? " xl:w-[60%]  lg:w-[70%] md:w-[80%] w-[90%] mx-auto max-h-[80vh] " : " max-h-[60vh] md:w-[70vw] w-[80vw] lg:w-[700px] xl:w-[900px] " } ` }>
       {responses?.map((item, index) => (
@@ -28,25 +21,13 @@ export default function OutPutBox({ responses ,user , isFull}) {
 
           {/* Render response content dynamically */}
           <div className="text-gray-700">
-  {(item.response ?? "").split("\n").map((line, idx) => {
+  {String(item.response ?? "").split("\n").map((line, idx) => {
     if (line.startsWith("**")) {
-      return (
-        <p key={idx} className="font-bold mt-2">
-          {line.replace(/\*\*/g, "")}
-        </p>
-      );
+      return <p key={idx} className="font-bold mt-2">{line.replace(/\*\*/g, "")}</p>;
     } else if (line.startsWith("*")) {
-      return (
-        <p key={idx} className="ml-4 list-disc">
-          {line.replace(/\*/g, "")}
-        </p>
-      );
+      return <p key={idx} className="ml-4 list-disc">{line.replace(/\*/g, "")}</p>;
     } else {
-      return (
-        <p key={idx} className="mt-1">
-          {line}
-        </p>
-      );
+      return <p key={idx} className="mt-1">{line}</p>;
     }
   })}
 </div>

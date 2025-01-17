@@ -27,6 +27,7 @@ export default function MainHome({ isOpen, setIsOpen, user }) {
 
   const [logout, setLogout] = useState(false);
 
+  console.log("responses" ,responses)
   // console.log("user",user?.name?.slice(0,1))
 
   const menuRef = useRef(null);
