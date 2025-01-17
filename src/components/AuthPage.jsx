@@ -52,12 +52,7 @@ export default function AuthPage() {
               Sign Up
             </button>
           </Link>
-          <button
-            onClick={() => setIsGuestMode(true)}
-            className="w-full py-2 px-4 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition"
-          >
-            Continue as Guest
-          </button>
+          
         </div>
       </div>
 
