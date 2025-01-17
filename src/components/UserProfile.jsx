@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaCamera, FaEdit, FaTrash, FaKey, FaSignOutAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, getUserData } from "../store/authSlice";
+import { deleteUser, getOtpForReg, getUserData, updateUserEmail, updateUserName } from "../store/authSlice";
 import { deleteAllPrompt } from "../store/promptSlice";
 import AskUi from "./ui/AskUi";
 import toast from "react-hot-toast";
@@ -15,8 +15,12 @@ export default function UserProfile() {
   const [newEmail, setNewEmail] = useState("");
   const suggestions = ["Change Password", "Change Email", "Settings", "Logout"];
   const dispatch = useDispatch();
+  const [askOtp , setAskOtp] = useState(false);
+  const [reqOtp , setReqOtp] = useState("");
   const [userData, setUserData] = useState(null);
-  const { user } = useSelector((state) => state.authSlice);
+  const { user ,otpLoading} = useSelector((state) => state.authSlice);
+
+  // console.log(otpLoading,"otpLoading")
 
   useEffect(() => {
     if (!userData) {
@@ -46,10 +50,66 @@ export default function UserProfile() {
     return () => clearInterval(timer);
   }, [askDeleteAccount]);
 
-  const handleUpdateInfo = () => {
-    console.log("New Name:", newName);
-    console.log("New Email:", newEmail);
-    setIsEditing(false);
+  const handleUpdateEmailOtpRequest = () => {
+    const formdata = {
+      id: user.id,
+      email: newEmail,
+    };
+    if(user.email != newEmail){
+      dispatch(getOtpForReg(formdata.email))
+      .then((x) => {
+        if (x?.payload.success) {
+          setAskOtp(true);
+          toast.success(x?.payload.message || "done");
+        } else {
+          toast.error(x?.payload.message || "error");
+        }
+      });
+    } else {
+      toast.error("You did't change your Email");
+    }
+  };
+
+  const handleUpdateEmail = () => {
+    const formdata = {
+      id: user.id,
+      email: newEmail,
+      otp : reqOtp
+    }
+    dispatch(updateUserEmail(formdata))
+    .then((x) => {
+      if (x?.payload.success) {
+        setAskOtp(true);
+        toast.success(x?.payload.message || "done");
+        
+        setTimeout(() => {
+          window.location.href = "/";
+        } , 2000)
+
+      } else {
+        toast.error(x?.payload.message || "error");
+      }
+    });
+  }
+
+  const handleUpdateName = () => {
+    const formdata = {
+      id: user.id,
+      newName: newName,
+    };
+    if (user.name != newName) {
+      dispatch(updateUserName(formdata)).then((x) => {
+        if (x?.payload.success) {
+          setIsEditing(false);
+          toast.success(x?.payload.message || "done");
+          window.location.href = "/";
+        } else {
+          toast.error(x?.payload.message || "error");
+        }
+      });
+    } else {
+      toast.error("You did't change your name");
+    }
   };
 
   const handleDeleteAccount = () => {
@@ -132,39 +192,54 @@ export default function UserProfile() {
           {isEditing ? (
             <div>
               <div className="mb-4">
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Update Name
-                </label>
-                <input
-                  type="text"
-                  value={newName}
-                  onChange={(e) => setNewName(e.target.value)}
-                  className="w-full p-2 border rounded-lg"
-                />
+                <div className="flex items-center justify-between gap-4 ">
+                  <input
+                    type="text"
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    className="w-full p-2 border rounded-lg"
+                  />
+                  <button
+                    className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
+                    onClick={handleUpdateName}
+                  >
+                    update Name
+                  </button>
+                </div>
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Update Email
-                </label>
-                <input
-                  type="email"
-                  value={newEmail}
-                  onChange={(e) => setNewEmail(e.target.value)}
+                <div className="flex justify-between gap-4">
+                  {
+                    !askOtp ? <input
+                    type="email"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    className="w-full p-2 border rounded-lg"
+                  /> : <input
+                  type="number"
+                  placeholder="Enter otp here"
+                  value={reqOtp}
+                  onChange={(e) => setReqOtp(e.target.value)}
                   className="w-full p-2 border rounded-lg"
                 />
+                  }
+
+                  {!askOtp ? <button  disabled={otpLoading}
+                    className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
+                    onClick={handleUpdateEmailOtpRequest}
+                  >
+                    { otpLoading ? "Loading..." : "update Email"}
+                  </button> : <button  onClick={handleUpdateEmail} className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
+                     >VerifyOtp</button>}
+                </div>
               </div>
-              <button
-                onClick={handleUpdateInfo}
-                className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
-              >
-              
-                Update Info
-              </button>
+
               <button
                 onClick={() => setIsEditing(false)}
                 className="bg-red-500 ml-4 text-white py-2 px-4 rounded-md hover:bg-red-700 transition duration-300"
-              >Close 
-              </button> 
+              >
+                Close
+              </button>
             </div>
           ) : (
             <>

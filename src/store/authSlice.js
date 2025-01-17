@@ -151,6 +151,33 @@ export const deleteUser = createAsyncThunk(
 });
 
 
+export const updateUserName = createAsyncThunk(
+  "/auth/updateUserName", 
+  async (formData) => {
+  const response = await axios.post(
+    `${import.meta.env.VITE_API_URL}auth/updateUserName`,
+    {
+      formData
+    }
+  );
+  // console.log(response.data);
+  return response.data;
+});
+
+
+export const updateUserEmail = createAsyncThunk(
+  "/auth/updateUserEmail", 
+  async (formData) => {
+  const response = await axios.post(
+    `${import.meta.env.VITE_API_URL}auth/updateUserEmail`,
+    {
+      formData
+    }
+  );
+  // console.log(response.data);
+  return response.data;
+});
+
 
 
 
