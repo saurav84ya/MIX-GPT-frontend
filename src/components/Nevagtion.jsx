@@ -49,6 +49,7 @@ export default function Nevagtion({ isOpen, setIsOpen, setShowSearch,allPromptLi
         <option value="gemini">Gemini</option>
       <option value="llama">Llama-3.2</option>
       <option value="gemma2">Gemma2-9b</option>
+      <option value="deepseek">DeepSeek</option>
     </select>
           </div>
 
@@ -113,6 +114,7 @@ export default function Nevagtion({ isOpen, setIsOpen, setShowSearch,allPromptLi
       <option value="gemini">Gemini</option>
       <option value="llama">Llama-3.2</option>
       <option value="gemma2">Gemma2-9b</option>
+      <option value="deepseek">DeepSeek</option>
     </select>
           </div>
 
